@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Obj.h"
 
 @interface AppDelegate ()
 
@@ -16,9 +17,102 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+//    NSDate *date = [NSDate new];
+//    NSLog(@"%@", date);
+//    
+//    // дата с интервалом + (в секундах)
+//    NSLog(@"%@", [date dateByAddingTimeInterval:5000]);
+//    NSLog(@"%@", [date dateByAddingTimeInterval:-10000]);
+//    
+//    // сравнение
+//    [date compare:[date dateByAddingTimeInterval:1000]];
+//    [date earlierDate:[date dateByAddingTimeInterval:1000]];    // возвращает ту дату, которая больше
+//    
+//    // дата с 01/01/2001 + 10 секутд
+//    NSDate *date2 = [NSDate dateWithTimeIntervalSinceReferenceDate:10];
+//    NSLog(@"%@", date2);
+//    
+//    NSDate *date3 = [NSDate dateWithTimeIntervalSince1970:10];
+//    NSLog(@"%@", date3);
+    
+    
+    //
+    // форматирование даты
+    //
+    
+    NSDate *date = [NSDate new];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    NSLog(@"NSDateFormatterNoStyle - %@", [dateFormatter stringFromDate:date]);
+    
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    NSLog(@"NSDateFormatterShortStyle - %@", [dateFormatter stringFromDate:date]);
+    
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSLog(@"NSDateFormatterMediumStyle - %@", [dateFormatter stringFromDate:date]);
+   
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    NSLog(@"NSDateFormatterLongStyle - %@", [dateFormatter stringFromDate:date]);
+    
+    [dateFormatter setDateStyle:NSDateFormatterFullStyle];
+    NSLog(@"NSDateFormatterFullStyle - %@", [dateFormatter stringFromDate:date]);
+    
+    //
+    // делаем свой стиль даты
+    //
+    
+    // DD день в году
+    // EEE день недели
+    // W неделя года
+    // hh.mm а (а - pm/am)
+    // SSS милисек
+//    [dateFormatter setDateFormat:@"dd.MM(MMMMM, MMM, MMMM).yyyy, EEE, hh.mm a"];   // 22.03(M, Mar, March).2017, Wed,   11.31 AM
+    [dateFormatter setDateFormat:@"dd.MM.yyyy hh.mm a"];
+    NSLog(@"my style - %@", [dateFormatter stringFromDate:date]);
+
+    // редактируем
+    NSDate *date3 = [dateFormatter dateFromString:@"05.06.1992 07.50 a"];   // вопрос - какого хера 03:50:00 +0000 (по гринвичу?)
+    NSLog(@"new format - %@", date3);
+    
+    
+    
+    
+//    NSDate *currentDate = [NSDate new];
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSDateComponents *componetns = [calendar components:NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth |
+//                                               NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute |
+//                                               NSCalendarUnitSecond | NSCalendarUnitWeekday | NSCalendarUnitWeekdayOrdinal
+//                                               fromDate:currentDate];
+////    NSLog(@"%@", componetns);
+//    NSInteger hours = [componetns hour];
+//    NSLog(@"%ld", hours);
+    
+    //
+    // подсчет даты  с определенного времени
+    //
+    
+    NSDate *date1 = [NSDate new];
+    NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:100500];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute
+                                               fromDate:date1 toDate:date2 options:0];
+    NSLog(@"%@", components);
+    
+    
+    //
+    // таймер
+    //
+    
+    
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerTest:) userInfo:nil repeats:YES]; // вызвать таймер через 1 секуеду
+
+    Obj *object = [Obj new];
+    
     return YES;
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
